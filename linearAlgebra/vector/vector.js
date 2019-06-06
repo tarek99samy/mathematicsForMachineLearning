@@ -74,6 +74,14 @@ class Vector {
         }
         return new Vector(arr);
     }
+    changeBasis(...basis){
+        if(basis.length != this.size) return null;
+        let arr = [];
+        for(let i=0;i<this.size;i++){
+            arr.push(this.vector[i].projection(basis[i]));
+        }
+        return new Vector(arr);
+    }
 }
 let a = new Vector([1,2,3,4])
 let b = new Vector([1,2,3,4])

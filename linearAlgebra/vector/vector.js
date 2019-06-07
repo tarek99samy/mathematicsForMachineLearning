@@ -87,5 +87,5 @@
 // let b = new Vector([1,2,3,4])
 // let c = new Vector([1,2,3,4])
 // console.log( a.dotProduct(b))
-exports.module = Vector;
+//exports.module = Vector;
 

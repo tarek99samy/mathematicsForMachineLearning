@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>linear Algebra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+    .inM{
+        width: 50px !important;
+        margin: 10px
+        
+    }
+    .variable{
+        font-size: 20px !important;
+        color: black !important
+    }
+    #sub{
+       
+       margin: 20px 0;
+       background: purple
+    }
+    #matrixInput{
+        position: relative;
+    }
+    </style>
+</head>
+<body>
+    
+
+  <ul id="slide-out" class="sidenav">
+        <li><a href="../index.html"><i class="material-icons">home</i>home</a></li>
+    <li><a href="solveLinear.html"><i class="material-icons">blur_linear</i>solve linear equations</a></li>
+  </ul>
+  <a href="#" data-target="slide-out" class="sidenav-trigger btn-floating btn-large waves-effect waves-light red"><i class="material-icons">dehaze</i></a>
+
+
+  <div class="container">
+      <h1 class="center"> solve linear equations</h1>
+      
+      <label for="">no of unknowns and equations</label>
+      <input type="number" id="noOfEqs">
+      <button  class="btn" id="noF">submit</button>
+     
+      <div id="matrixInput">
+
+            <button  class="btn" id="sub">submit</button>
+            <button  class="btn" id="reset">reset</button>
+            <div></div>
+      </div>
+  </div>
+    <script src="matrix.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="solveLinear.js"></script>
+    <script src="../app.js"></script>
+
+</body>
+</html>

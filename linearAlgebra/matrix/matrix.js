@@ -1,5 +1,5 @@
 //const Vector = require('../vector/vector');
-class Matrix{
+class Matrix {
     constructor(matrix){
         this.matrix = matrix;
         this.rows = matrix.length;
@@ -77,13 +77,13 @@ class Matrix{
     
 }
 
-let h = new Matrix([
-    [1,5,6,7],
-    [4,6,3,2],
-    [1,4,7,8],
-]);
-h.print()
-let g = h.gaussianElimenation()
-let x = h.solveLinearEquations();
-console.log(x)
+// let h = new Matrix([
+//     [1,5,6,7],
+//     [4,6,3,2],
+//     [1,4,7,8],
+// ]);
+// h.print()
+// let g = h.gaussianElimenation()
+// let x = h.solveLinearEquations();
+// console.log(x)
 //console.log(g['guassianMatrix'].print())

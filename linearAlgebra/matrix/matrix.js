@@ -54,16 +54,36 @@ class Matrix{
             'operationsArray': arr
         };
     }
+    solveLinearEquations(){
+        let sol = [];
+         
+        let guassianMatrix = this.gaussianElimenation()['guassianMatrix'];
+        let guassianMatrixArray = this.gaussianElimenation()['guassianMatrix'].matrix;
+        let curr = guassianMatrix.cols-2;
+        let h = 0;
+        for(let i=guassianMatrix.rows-1;i>=0;i--){
+            let el = guassianMatrixArray[i][guassianMatrix.cols-1];
+            let s = 0;
+            for(let j=0;j<h;j++){
+                el -= guassianMatrixArray[i][guassianMatrix.cols-2-j]*sol[j];
+            }
+            s = el/guassianMatrixArray[i][curr];
+            curr--;
+            h++;
+            sol.push(s);
+        }
+        return sol.reverse();
+    }
     
 }
 
 let h = new Matrix([
-    [1,2,3,8],
-    [4,5,6,67],
-    [7,8,19,6],
-    [7,8,19,6],
+    [1,5,6,7],
+    [4,6,3,2],
+    [1,4,7,8],
 ]);
 h.print()
 let g = h.gaussianElimenation()
-
-//console.log(g)
+let x = h.solveLinearEquations();
+console.log(x)
+//console.log(g['guassianMatrix'].print())

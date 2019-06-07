@@ -1,4 +1,4 @@
-class Vector {
+ class Vector {
     constructor(vector){
         this.vector = vector;
         this.size = vector.length;
@@ -83,9 +83,9 @@ class Vector {
         return new Vector(arr);
     }
 }
-let a = new Vector([1,2,3,4])
-let b = new Vector([1,2,3,4])
-let c = new Vector([1,2,3,4])
-console.log( a.dotProduct(b))
-
+// let a = new Vector([1,2,3,4])
+// let b = new Vector([1,2,3,4])
+// let c = new Vector([1,2,3,4])
+// console.log( a.dotProduct(b))
+exports.module = Vector;
 

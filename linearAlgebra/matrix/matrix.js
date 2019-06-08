@@ -74,16 +74,64 @@ class Matrix {
         }
         return sol.reverse();
     }
-    
+    inverse(){
+       let copyMatrix = this.matrix;
+       let copyMatrix1 = this.matrix;
+       let col = 0;
+       // get 1 and zero below it
+       for(let i=0;i<this.rows;i++){
+           let x = copyMatrix[i][col];
+           if(x == 0){
+               if(i<this.rows-1){
+                   let ind = -1;
+                   for(let g=i+1;h<this.rows;g++){
+                    if( copyMatrix[g][col] != 0 ) ind = g;
+                   }
+                   if(ind!= -1){
+                   let temp  = copyMatrix[i];
+                   copyMatrix[i] = copyMatrix[ind];
+                   copyMatrix[ind] = temp;
+                   }else{
+                       return -1;
+                   }
+               }
+           }
+            for(let j=0;j<this.cols;j++){
+                copyMatrix[i][j] /= x;
+            }
+            for(let j=i+1;j<this.rows;j++){
+                let x = copyMatrix[j][col];
+                for(let k=0;k<this.cols;k++){
+                    copyMatrix[j][k] -= x*copyMatrix[i][k];
+                }
+            }
+            col++;
+       }
+       //console.log(copyMatrix)
+       // lvl up and get zeroes
+       let curr = this.cols/2-1;
+       for(let i=this.rows-1;i>=0;i--){
+           for(let j=i-1;j>=0;j--){
+                let x = copyMatrix[j][curr];
+                for(let k=0;k<this.cols;k++){
+                    copyMatrix[j][k] -= x*copyMatrix[i][k];
+                }
+           }
+           curr--;
+       }
+      return copyMatrix;
+
+    }
 }
 
-// let h = new Matrix([
-//     [1,5,6,7],
-//     [4,6,3,2],
-//     [1,4,7,8],
-// ]);
+let h = new Matrix([
+   [4,7,1,0],
+   [2,6,0,1]
+]);
+console.log(h.inverse())
+//console.log(h.inverse())
 // h.print()
-// let g = h.gaussianElimenation()
-// let x = h.solveLinearEquations();
+ //let g = h.gaussianElimenation()
+ //let x = h.solveLinearEquations();
 // console.log(x)
 //console.log(g['guassianMatrix'].print())

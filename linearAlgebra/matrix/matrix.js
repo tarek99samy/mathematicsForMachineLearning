@@ -179,15 +179,37 @@ class Matrix {
       return new Matrix(m);
 
     }
+    multiplication(matrixX){
+        let matrix1 = this.matrix;
+        let matrix2 = matrixX.matrix;
+        let sol = [];
+        if( this.cols != matrixX.rows ) return -1;
+        for(let i=0;i<this.rows;i++){
+            sol.push([]);
+            for(let j=0;j<matrixX.cols;j++){
+                let no = 0;
+                for(let k=0;k<matrixX.rows;k++){
+                    no += matrix1[i][k]*matrix2[k][j];
+                }
+                 sol[i].push(no);
+            }
+        }
+        return new Matrix(sol);
+    }
 }
 
 let h = new Matrix([
-   [2,3,4],
-   [5,6,7],
-   [7,8,9]
+   [1,2,3],
+   [4,5,6]
 ]);
+let k = new Matrix([
+    [7,8],
+    [9,10],
+    [11,12]
+])
+console.log(h.multiplication(k))
 //h.reducedEchelomForm()
-console.log(h.inverse())
+//console.log(h.inverse())
 //console.log(h.inverse())
 //console.log(h.inverse())
 // h.print()

@@ -74,9 +74,9 @@ class Matrix {
         }
         return sol.reverse();
     }
-    inverse(){
-       let copyMatrix = this.matrix;
-       let copyMatrix1 = this.matrix;
+    reducedEchelomForm(){
+        let copyMatrix = this.matrix;
+      
        let col = 0;
        // get 1 and zero below it
        for(let i=0;i<this.rows;i++){
@@ -107,28 +107,88 @@ class Matrix {
             }
             col++;
        }
+       return new Matrix(copyMatrix);
+    }
+    inverse(){
+       let copyMatrix = this.matrix;
+       // add identity
+       for(let i=0;i<this.rows;i++){
+           for(let j=0;j<this.cols;j++){
+               if(j==i){
+                   
+                   copyMatrix[i].push(1);
+               }else{
+
+               copyMatrix[i].push(0);
+               }
+           }
+       }
+      // console.log(copyMatrix)
+       let col = 0;
+       // get 1 and zero below it
+       for(let i=0;i<this.rows;i++){
+           let x = copyMatrix[i][col];
+          
+           if(x == 0){
+               if(i<this.rows-1){
+                   let ind = -1;
+                   for(let g=i+1;h<this.rows;g++){
+                    if( copyMatrix[g][col] != 0 ) ind = g;
+                   }
+                   if(ind!= -1){
+                   let temp  = copyMatrix[i];
+                   copyMatrix[i] = copyMatrix[ind];
+                   copyMatrix[ind] = temp;
+                   }else{
+                       return -1;
+                   }
+               }
+           }
+            for(let j=0;j<copyMatrix[0].length;j++){
+                copyMatrix[i][j] /= x;
+            }
+            for(let j=i+1;j<this.rows;j++){
+                let x = copyMatrix[j][col];
+                for(let k=0;k<copyMatrix[0].length;k++){
+                    copyMatrix[j][k] -= x*copyMatrix[i][k];
+                }
+            }
+            col++;
+       }
        //console.log(copyMatrix)
        // lvl up and get zeroes
-       let curr = this.cols/2-1;
+       let curr = this.cols-1;
        for(let i=this.rows-1;i>=0;i--){
            for(let j=i-1;j>=0;j--){
                 let x = copyMatrix[j][curr];
-                for(let k=0;k<this.cols;k++){
+                for(let k=0;k<copyMatrix[0].length;k++){
                     copyMatrix[j][k] -= x*copyMatrix[i][k];
                 }
            }
            curr--;
        }
-      return copyMatrix;
+       let m = [];
+       for(let i=0;i<this.rows;i++){
+           let t = [];
+           for(let j=0;j<this.cols;j++){
+                t.push(copyMatrix[i][j+this.cols]);
+           }
+           m.push(t)
+       }
+      // console.log(copyMatrix)
+      return new Matrix(m);
 
     }
 }
 
 let h = new Matrix([
-   [4,7,1,0],
-   [2,6,0,1]
+   [2,3,4],
+   [5,6,7],
+   [7,8,9]
 ]);
+//h.reducedEchelomForm()
 console.log(h.inverse())
+//console.log(h.inverse())
 //console.log(h.inverse())
 // h.print()
  //let g = h.gaussianElimenation()

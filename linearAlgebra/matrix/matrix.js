@@ -80,7 +80,9 @@ class Matrix {
        let col = 0;
        // get 1 and zero below it
        for(let i=0;i<this.rows;i++){
+           if( col < this.cols ){
            let x = copyMatrix[i][col];
+           console.log(x)
            if(x == 0){
                if(i<this.rows-1){
                    let ind = -1;
@@ -94,6 +96,8 @@ class Matrix {
                    }else{
                        return -1;
                    }
+               }else{
+                return new Matrix(copyMatrix);
                }
            }
             for(let j=0;j<this.cols;j++){
@@ -106,6 +110,7 @@ class Matrix {
                 }
             }
             col++;
+        }
        }
        return new Matrix(copyMatrix);
     }
@@ -206,8 +211,16 @@ let k = new Matrix([
     [7,8],
     [9,10],
     [11,12]
+]);
+let m = new Matrix([
+    [1,1,1],
+    [2,1,0],
+    [1,0,0],
+    [0,1,1],
+    [0,1,1]
 ])
-console.log(h.multiplication(k))
+console.log(m.reducedEchelomForm())
+//console.log(h.multiplication(k))
 //h.reducedEchelomForm()
 //console.log(h.inverse())
 //console.log(h.inverse())

@@ -68,7 +68,7 @@
     projectionVector(vector2){
         let arr = [];
         let proj = this.projection(vector2);
-        let unity = vector2.unitVector();
+        let unity = [...vector2.unitVector()];
         for(let i=0;i<this.size;i++){
             arr.push(unity.vector[i]*proj);
         }
@@ -78,12 +78,14 @@
         if(basis.length != this.size) return null;
         let arr = [];
         for(let i=0;i<this.size;i++){
-            arr.push(this.vector[i].projection(basis[i]));
+           // arr.push(this.vector[i].projection(basis[i]));
         }
         return new Vector(arr);
     }
 }
-// let a = new Vector([1,2,3,4])
+ let a = new Vector([2,1])
+ console.log(a.projection(new Vector([3,-4])))
+// console.log(a.changeBasis(new Vector([1,1]), new Vector([1,-1])))
 // let b = new Vector([1,2,3,4])
 // let c = new Vector([1,2,3,4])
 // console.log( a.dotProduct(b))

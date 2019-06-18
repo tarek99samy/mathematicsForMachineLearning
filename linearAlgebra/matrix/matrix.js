@@ -21,7 +21,9 @@ class Matrix {
         let x = 0;
         let j = 0;
        
-        let copyMatrix = this.matrix;
+        let copyMatrix = this.matrix.map(function(arr) {
+            return arr.slice();
+        });
        
        
        
@@ -75,7 +77,9 @@ class Matrix {
         return sol.reverse();
     }
     reducedEchelomForm(){
-        let copyMatrix = this.matrix;
+        let copyMatrix = this.matrix.map(function(arr) {
+            return arr.slice();
+        });
       
        let col = 0;
        // get 1 and zero below it
@@ -115,7 +119,9 @@ class Matrix {
        return new Matrix(copyMatrix);
     }
     inverse(){
-       let copyMatrix = this.matrix;
+       let copyMatrix = this.matrix.map(function(arr) {
+        return arr.slice();
+    });
        // add identity
        for(let i=0;i<this.rows;i++){
            for(let j=0;j<this.cols;j++){
@@ -185,9 +191,14 @@ class Matrix {
 
     }
     multiplication(matrixX){
-        let matrix1 = this.matrix;
-        let matrix2 = matrixX.matrix;
+        let matrix1 = this.matrix.map(function(arr) {
+            return arr.slice();
+        });
+        let matrix2 = matrixX.matrix.map(function(arr) {
+            return arr.slice();
+        });
         let sol = [];
+        //console.log(this.cols , matrixX.rows)
         if( this.cols != matrixX.rows ) return -1;
         for(let i=0;i<this.rows;i++){
             sol.push([]);
@@ -203,30 +214,17 @@ class Matrix {
     }
 }
 
-let h = new Matrix([
-   [1,2,3],
-   [4,5,6]
-]);
-let k = new Matrix([
-    [7,8],
-    [9,10],
-    [11,12]
-]);
-let m = new Matrix([
-    [1,1,1],
-    [2,1,0],
-    [1,0,0],
-    [0,1,1],
-    [0,1,1]
+let c = new Matrix([
+   [1,2],
+   [0,1]
 ])
-console.log(m.reducedEchelomForm())
-//console.log(h.multiplication(k))
-//h.reducedEchelomForm()
-//console.log(h.inverse())
-//console.log(h.inverse())
-//console.log(h.inverse())
-// h.print()
- //let g = h.gaussianElimenation()
- //let x = h.solveLinearEquations();
-// console.log(x)
-//console.log(g['guassianMatrix'].print())
+let t = new Matrix([
+    
+    [1,0],
+    [2,-1]
+])
+console.log(t.multiplication(t).multiplication(t).multiplication(t).multiplication(t))
+let cI = c.inverse();
+let m = cI.multiplication(t);
+//console.log(m,c)
+console.log(m.multiplication(c));

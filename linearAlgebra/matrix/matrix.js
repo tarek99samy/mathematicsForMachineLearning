@@ -76,7 +76,7 @@ class Matrix {
         }
         return sol.reverse();
     }
-    reducedEchelomForm(){
+    rowEchelonForm(){
         let copyMatrix = this.matrix.map(function(arr) {
             return arr.slice();
         });
@@ -118,6 +118,7 @@ class Matrix {
        }
        return new Matrix(copyMatrix);
     }
+
     inverse(){
        let copyMatrix = this.matrix.map(function(arr) {
         return arr.slice();
@@ -215,9 +216,9 @@ class Matrix {
 }
 
 let b = new Matrix([
-  [1,0],
-  [1,1],
-  [1,2]
+  [1,330,.6],
+  [1,1,9],
+  [1,2,56]
 ])
 let bt = new Matrix([
     [1,1,1],
@@ -228,8 +229,8 @@ let x = new Matrix([
     [0],
     [0]
 ])
-let c =bt.multiplication(b).inverse()
-console.log(b.multiplication(c).multiplication(bt).multiplication(x))
+//let c =bt.multiplication(b).inverse()
+console.log(b.rowEchelonForm())
 //let cI = c.inverse();
 //let m = cI.multiplication(t);
 //console.log(m,c)

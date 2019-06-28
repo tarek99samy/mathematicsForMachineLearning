@@ -214,17 +214,23 @@ class Matrix {
     }
 }
 
-let c = new Matrix([
-   [1,2],
-   [0,1]
+let b = new Matrix([
+  [1,0],
+  [1,1],
+  [1,2]
 ])
-let t = new Matrix([
-    
-    [1,0],
-    [2,-1]
+let bt = new Matrix([
+    [1,1,1],
+    [0,1,2]
 ])
-console.log(t.multiplication(t).multiplication(t).multiplication(t).multiplication(t))
-let cI = c.inverse();
-let m = cI.multiplication(t);
+let x = new Matrix([
+    [12],
+    [0],
+    [0]
+])
+let c =bt.multiplication(b).inverse()
+console.log(b.multiplication(c).multiplication(bt).multiplication(x))
+//let cI = c.inverse();
+//let m = cI.multiplication(t);
 //console.log(m,c)
-console.log(m.multiplication(c));
+//console.log(m.multiplication(c));

@@ -83,8 +83,9 @@
         return new Vector(arr);
     }
 }
- let a = new Vector([2,1])
- console.log(a.projection(new Vector([3,-4])))
+ let a = new Vector([1,2,3])
+ let b = new Vector([2,2,-5])
+ console.log(a.theta(b))
 // console.log(a.changeBasis(new Vector([1,1]), new Vector([1,-1])))
 // let b = new Vector([1,2,3,4])
 // let c = new Vector([1,2,3,4])

@@ -268,6 +268,14 @@ class Matrix {
         }
         return m;
     }
+    trace(){
+        if(this.cols != this.rows) return NaN;
+        let x = 0;
+        for(let i=0;i<this.rows;i++){
+            x += this.matrix[i][i];
+        }
+        return x;
+    }
 }
 
 let x = new Matrix([

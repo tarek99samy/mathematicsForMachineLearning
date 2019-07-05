@@ -90,7 +90,7 @@ class Matrix {
            if(x == 0){
                if(i<this.rows-1){
                    let ind = -1;
-                   for(let g=i+1;h<this.rows;g++){
+                   for(let g=i+1;g<this.rows;g++){
                     if( copyMatrix[g][col] != 0 ) ind = g;
                    }
                    if(ind!= -1){
@@ -215,23 +215,52 @@ class Matrix {
     }
 }
 
+// let xt = new Matrix([
+//     [1,1,1]
+// ])
+// let x = new Matrix([
+//     [1],
+//     [1],
+//     [1]
+// ])
+// let y = new Matrix([
+//     [2],
+//     [-1],
+//     [0]
+// ])
+// let yt = new Matrix([
+//     [2,-1,0]
+// ])
+// let a = new Matrix([
+//     [1,0,0],
+//     [0,2,-1],
+//     [0,-1,3]
+// ])
+// let normX =  Math.sqrt(xt.multiplication(a).multiplication(x).matrix[0][0]);
+// let normY =  Math.sqrt( yt.multiplication(a).multiplication(y).matrix[0][0]);
+// let cosW = xt.multiplication(a).multiplication(y).matrix[0][0];
+// cosW = cosW/(normX*normY);
+// console.log(Math.acos(cosW));
+
 let b = new Matrix([
-  [1,330,.6],
-  [1,1,9],
-  [1,2,56]
+    [3],
+    [0],
+    [4]
 ])
 let bt = new Matrix([
-    [1,1,1],
-    [0,1,2]
+    [3,0,4]
 ])
-let x = new Matrix([
-    [12],
-    [0],
-    [0]
+let p = new Matrix([
+    [9,0,12],
+    [0,0,0],
+    [12,0,6]
 ])
-//let c =bt.multiplication(b).inverse()
-console.log(b.rowEchelonForm())
-//let cI = c.inverse();
-//let m = cI.multiplication(t);
-//console.log(m,c)
-//console.log(m.multiplication(c));
+let X = new Matrix([
+ [1],
+ [1],
+ [1]
+])
+let x = bt.multiplication(b).matrix[0][0];
+let y = b.multiplication(bt);
+let z = bt.multiplication(b).inverse().multiplication(bt).multiplication(X);
+console.log(z)

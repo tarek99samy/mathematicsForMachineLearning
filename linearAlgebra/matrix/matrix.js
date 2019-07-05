@@ -80,45 +80,76 @@ class Matrix {
         let copyMatrix = this.matrix.map(function(arr) {
             return arr.slice();
         });
-      
        let col = 0;
        // get 1 and zero below it
        for(let i=0;i<this.rows;i++){
            if( col < this.cols ){
-           let x = copyMatrix[i][col];
-           console.log(x)
-           if(x == 0){
-               if(i<this.rows-1){
-                   let ind = -1;
-                   for(let g=i+1;g<this.rows;g++){
-                    if( copyMatrix[g][col] != 0 ) ind = g;
-                   }
-                   if(ind!= -1){
-                   let temp  = copyMatrix[i];
-                   copyMatrix[i] = copyMatrix[ind];
-                   copyMatrix[ind] = temp;
-                   }else{
-                       return -1;
-                   }
-               }else{
-                return new Matrix(copyMatrix);
-               }
-           }
-            for(let j=0;j<this.cols;j++){
-                copyMatrix[i][j] /= x;
-            }
             for(let j=i+1;j<this.rows;j++){
-                let x = copyMatrix[j][col];
+                if(copyMatrix[i][col] != 0){
+                let x =  copyMatrix[j][col]/copyMatrix[i][col];  
                 for(let k=0;k<this.cols;k++){
                     copyMatrix[j][k] -= x*copyMatrix[i][k];
                 }
+            }
             }
             col++;
         }
        }
        return new Matrix(copyMatrix);
     }
-
+    reducedRowEchelonFoem(){
+            let copyMatrix = this.rowEchelonForm().matrix.map(function(arr) {
+                return arr.slice();
+            });;
+               //let x = copyMatrix[i][col];
+               //console.log(x)
+              /* if(x == 0){
+                   if(i<this.rows-1){
+                       let ind = -1;
+                       for(let g=i+1;g<this.rows;g++){
+                        if( copyMatrix[g][col] != 0 ) ind = g;
+                       }
+                       if(ind!= -1){
+                       let temp  = copyMatrix[i];
+                       copyMatrix[i] = copyMatrix[ind];
+                       copyMatrix[ind] = temp;
+                       }else{
+                           return -1;
+                       }
+                   }else{
+                    return new Matrix(copyMatrix);
+                   }
+               }
+                for(let j=0;j<this.cols;j++){
+                    copyMatrix[i][j] /= x;
+                }
+                */
+                for(let i=0;i<this.rows;i++){
+                    for(let j=0;j<this.cols;j++){
+                        if( copyMatrix[i][j] !== 0 ){
+                            let x = copyMatrix[i][j];
+                            // convert the leading non zero to one
+                            for(let k=0;k<this.cols;k++){
+                                copyMatrix[i][k] /= x;
+                            }
+                            let col = j;
+                            let row = i;
+                            // get zeroes in all of the cols except it
+                            for(let h = 0;h<this.rows;h++){
+                                let x = copyMatrix[h][col];
+                                for(let k=0;k<this.cols;k++){
+                                    if( h !== row ){
+                                        copyMatrix[h][k] -= x*copyMatrix[row][k];
+                                    }
+                                }
+                            }
+                           break; 
+                        }
+                    }
+                }
+           return new Matrix(copyMatrix);
+        
+    }
     inverse(){
        let copyMatrix = this.matrix.map(function(arr) {
         return arr.slice();
@@ -213,54 +244,38 @@ class Matrix {
         }
         return new Matrix(sol);
     }
+    transpose(){
+        let aa = [];
+        for(let i=0;i<this.cols;i++){
+            let a =[];
+            for(let j=0;j<this.rows;j++){
+                a.push(this.matrix[j][i]);
+
+            }
+            aa.push(a);
+        }
+        return new Matrix(aa);
+    }
+    determinant(){
+        if(this.cols != this.rows) return -1;
+        let copyMatrix = this.rowEchelonForm().matrix.map(function(arr) {
+            return arr.slice();
+        });;
+       // console.log(copyMatrix)
+        let m = 1;
+        for(let i=0;i<this.rows;i++){
+            m *= copyMatrix[i][i];
+        }
+        return m;
+    }
 }
 
-// let xt = new Matrix([
-//     [1,1,1]
-// ])
-// let x = new Matrix([
-//     [1],
-//     [1],
-//     [1]
-// ])
-// let y = new Matrix([
-//     [2],
-//     [-1],
-//     [0]
-// ])
-// let yt = new Matrix([
-//     [2,-1,0]
-// ])
-// let a = new Matrix([
-//     [1,0,0],
-//     [0,2,-1],
-//     [0,-1,3]
-// ])
-// let normX =  Math.sqrt(xt.multiplication(a).multiplication(x).matrix[0][0]);
-// let normY =  Math.sqrt( yt.multiplication(a).multiplication(y).matrix[0][0]);
-// let cosW = xt.multiplication(a).multiplication(y).matrix[0][0];
-// cosW = cosW/(normX*normY);
-// console.log(Math.acos(cosW));
-
-let b = new Matrix([
-    [3],
-    [0],
-    [4]
+let x = new Matrix([
+    [0,2,1,-1],
+    [0,0,3,1],
+    [0,0,0,0]
+   
 ])
-let bt = new Matrix([
-    [3,0,4]
-])
-let p = new Matrix([
-    [9,0,12],
-    [0,0,0],
-    [12,0,6]
-])
-let X = new Matrix([
- [1],
- [1],
- [1]
-])
-let x = bt.multiplication(b).matrix[0][0];
-let y = b.multiplication(bt);
-let z = bt.multiplication(b).inverse().multiplication(bt).multiplication(X);
-console.log(z)
+//x.print()
+console.log(x.rowEchelonForm())
+console.log(x.reducedRowEchelonFoem())

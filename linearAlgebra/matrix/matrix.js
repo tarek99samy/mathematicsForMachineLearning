@@ -1,4 +1,5 @@
 //const Vector = require('../vector/vector');
+//import  Vector  from './../vector/vector.js'
 class Matrix {
     constructor(matrix){
         this.matrix = matrix;
@@ -15,6 +16,47 @@ class Matrix {
            s+= '| \n';
         }
         console.log(s)
+    }
+    dotProduct(...vectors){
+       
+        let y = 0;
+        for(let i=0;i<vectors[0].length;i++){
+            let x = 1;
+            for(let j=0;j<vectors.length;j++){
+                x *= vectors[j][i];
+            }
+            y += x;
+        }
+        return y;
+    }
+    add(...vectors){
+        let n = vectors.length;
+        let arr = [];
+        for(let j=0;j<vectors[0].length;j++){
+            let x =0;
+            for(let i=0;i<n;i++){
+               
+                x += vectors[i][j];
+            }
+            arr.push(x);
+      }
+      
+      return arr;
+    }
+    scale(vector,x){
+        let arr = []
+        for(let i=0;i<vector.length;i++){
+            arr.push(vector[i] * x);
+        }
+        return arr;
+    }
+    norm(vector){
+        let x = 0;
+        for(let i=0;i<vector.length;i++){
+            x += vector[i]*vector[i];
+        }
+        x = Math.sqrt(x);
+        return x;
     }
     gaussianElimenation(){
         let arr = [];
@@ -276,14 +318,66 @@ class Matrix {
         }
         return x;
     }
+    gramSchmidt(){
+        let copyMatrix = this.matrix.map((arr)=>{
+            return arr.slice();
+        });
+        let copyMatrixTransposed = this.transpose().matrix.map((arr)=>{
+            return arr.slice();
+        });
+        let a = [];
+        let m = 0;
+        // qm = bm - { qj.bm*qj }j = 1 => m-1
+       
+        for(let i=0;i<this.cols;i++){
+            let bm = copyMatrixTransposed[m];
+           // console.log(bm);
+            let sum = [];   
+            for(let j=0;j<m;j++){
+                let h = this.dotProduct(a[j],bm);
+                let y = this.scale(a[j],h);
+               // console.log('qi ',a[j],' bi ', copyMatrixTransposed[j] ,' dot ',h)
+                sum.push(y);
+            }
+            let qm = [];
+            if( sum.length > 0 ){
+                let s = this.add(...sum);
+               // console.log('sum ',sum,' s ',s)
+                s = this.scale(s,-1);
+                qm = this.add(bm,s);
+                //console.log('before norm ',qm)
+            }else{
+                qm = bm;
+            }
+            let normQ = this.norm(qm);
+            qm = this.scale(qm,1/normQ);
+            a.push(qm);
+            m++;
+           // console.log('qm '+qm);
+        }
+        return new Matrix(a).transpose()
+    }
+    QRfactorization(){
+        // A = QR
+        let Q = this.gramSchmidt();
+        let R = Q.transpose().multiplication(this);
+        return {
+            Q:Q,
+            R:R
+        }
+
+    }
 }
 
 let x = new Matrix([
-    [0,2,1,-1],
-    [0,0,3,1],
-    [0,0,0,0]
+    [1,2,4],
+    [0,0,5],
+    [0,3,6]
    
 ])
 //x.print()
-console.log(x.rowEchelonForm())
-console.log(x.reducedRowEchelonFoem())
+//console.log(x.rowEchelonForm())
+//console.log(x.reducedRowEchelonFoem())
+//console.log(...x.matrix)
+let QR = x.QRfactorization();
+console.log(QR.Q,QR.R)

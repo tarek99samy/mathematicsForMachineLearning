@@ -350,7 +350,9 @@ class Matrix {
                 qm = bm;
             }
             let normQ = this.norm(qm);
-            qm = this.scale(qm,1/normQ);
+            if( normQ != 0 ){ 
+                qm = this.scale(qm,1/normQ);
+            }
             a.push(qm);
             m++;
            // console.log('qm '+qm);
@@ -360,6 +362,7 @@ class Matrix {
     QRfactorization(){
         // A = QR
         let Q = this.gramSchmidt();
+        //console.log('Q',Q)
         let R = Q.transpose().multiplication(this);
         return {
             Q:Q,
@@ -367,17 +370,52 @@ class Matrix {
         }
 
     }
+    QRAlgorithm(acc){
+        if( this.rows == this.cols && this.determinant() != 0 ){
+        let A = new Matrix(this.matrix);
+        let QF = [];
+        for(let i=0;i<acc;i++){
+            let QR = A.QRfactorization();
+            let Q = QR.Q;
+            if(i==0){
+                QF = Q;
+               // console.log(QF)
+            }else{
+                QF = QF.multiplication(Q);
+            }
+            //let R = QR.R;
+            A = Q.transpose().multiplication(A).multiplication(Q);
+           // A.print()
+           
+        }
+        let eigVal = [];
+        for(let i=0;i<A.rows;i++){
+            eigVal.push(A.matrix[i][i]);
+        }
+        return {
+            matrix:A,
+            eigVal:eigVal,
+            QF:QF
+        }
+    }else{
+        return -1;
+    }
+    }
 }
 
 let x = new Matrix([
-    [1,2,4],
-    [0,0,5],
-    [0,3,6]
+    [52,30,49,28],
+    [30,50,8,44],
+    [49,8,46,16],
+    [28,44,16,22]
    
 ])
 //x.print()
 //console.log(x.rowEchelonForm())
 //console.log(x.reducedRowEchelonFoem())
 //console.log(...x.matrix)
-let QR = x.QRfactorization();
-console.log(QR.Q,QR.R)
+//let QR = x.QRfactorization();
+//console.log(QR.Q,QR.R)
+let z = x.QRAlgorithm(15);
+console.log(z.eigVal)
+z.QF.print()
